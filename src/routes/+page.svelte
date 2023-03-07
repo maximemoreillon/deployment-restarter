@@ -9,7 +9,7 @@
 <TopAppBar bind:this={topAppBar} variant="fixed">
 	<TopAppBarRow>
 		<Section>
-			<!-- <img src="/svc.png" class="logo" /> -->
+			<img src="/deploy.png" class="logo" alt="logo" />
 			<Title>Deployment restarter</Title>
 		</Section>
 	</TopAppBarRow>
