@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Button, { Label } from '@smui/button';
 	import TopAppBar, { Row as TopAppBarRow, Section, Title, AutoAdjust } from '@smui/top-app-bar';
-	import { PUBLIC_DEPLOYMENT, PUBLIC_NAMESPACE } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
 
 	let topAppBar: TopAppBar;
 </script>
@@ -18,10 +18,10 @@
 	<main>
 		<form method="post">
 			<div>
-				Deployment: {PUBLIC_DEPLOYMENT}
+				Deployment: {env.PUBLIC_DEPLOYMENT || 'Undefined'}
 			</div>
 			<div>
-				Namespace: {PUBLIC_NAMESPACE}
+				Namespace: {env.PUBLIC_NAMESPACE || 'Undefined'}
 			</div>
 			<Button type="submit" variant="raised">
 				<Label>Restart</Label>
@@ -29,21 +29,20 @@
 		</form>
 	</main>
 </AutoAdjust>
-<footer>Deployment restarter - Maxime Moreillon - JTEKT Corporation</footer>
 
+<!-- <footer>Deployment restarter - Maxime Moreillon - JTEKT Corporation</footer> -->
 <style>
 	.logo {
 		width: 2.5em;
 		height: 2.5em;
 	}
-	footer {
+	/* footer {
 		margin: 0;
 		padding: 0;
-		/* background-color: #cccccc; */
 		text-align: center;
 		padding: 0.75em;
 		font-size: 80%;
-	}
+	} */
 
 	form {
 		min-height: 70vh;
