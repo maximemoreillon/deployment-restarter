@@ -9,7 +9,7 @@ services:
 variables:
   APPLICATION_NAME: deployment-restarter
   CONTAINER_IMAGE_NAME: ${APPLICATION_NAME}
-  CONTAINER_IMAGE: ${AWS_ECR_URL}/${CONTAINER_IMAGE_NAME}
+  CONTAINER_IMAGE: ${DOCKER_HUB_USERNAME}/${CONTAINER_IMAGE_NAME}
   CONTAINER_IMAGE_TAGGED: ${CONTAINER_IMAGE}:${CI_COMMIT_SHORT_SHA}
 
 build:
@@ -19,19 +19,8 @@ build:
   only:
     - master
   before_script:
-    # Create repository if needed
-    - >
-      aws ecr create-repository --repository-name ${CONTAINER_IMAGE_NAME}
-      || echo "Repository might have already existed"
-    # Log in to the registry (AWS credentials are stored as GitLab env variables)
-    - >
-      aws ecr get-login-password
-      | docker login
-      --username AWS
-      --password-stdin
-      ${AWS_ECR_URL}
+    - echo "${DOCKER_HUB_PASSWORD}" | docker login --username ${DOCKER_HUB_USERNAME} --password-stdin
+
   script:
-    # Build the container image
     - docker build -t ${CONTAINER_IMAGE_TAGGED} .
-    # Push container images to registry
     - docker push ${CONTAINER_IMAGE_TAGGED}
